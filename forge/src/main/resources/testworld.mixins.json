@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "net.examplemod.fabric.mixins",
+  "package": "net.testworld.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
   ],

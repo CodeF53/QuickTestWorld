@@ -1,4 +1,4 @@
-package net.examplemod.fabric;
+package net.testworld.fabric;
 
 import com.llamalad7.mixinextras.MixinExtrasBootstrap;
 import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;

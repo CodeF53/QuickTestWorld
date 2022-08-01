@@ -6,10 +6,10 @@ license = "${license}"
 [[mods]]
 modId = "${id}"
 version = "${version}"
-displayName = "Example Mod"
+displayName = "Quick Test World"
 authors = "Me!"
 description = '''
-This is an example description! Tell everyone what your mod is about!
+A minecraft mod that adds a new world type "testworld"
 '''
 #logoFile = ""
 
