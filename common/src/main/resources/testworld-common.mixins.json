@@ -6,10 +6,7 @@
     "OnCreateWorldMixin",
     "WorldGenSettingsComponentMixin",
     "WorldPresetMixin"
-  ],
-  "mixins": [
-    "testmixin"
-  ],
+  ]
   "injectors": {
     "defaultRequire": 1
   }

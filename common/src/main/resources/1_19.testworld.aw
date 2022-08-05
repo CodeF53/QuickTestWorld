@@ -6,4 +6,5 @@ accessible field net/minecraft/client/gui/screens/worldselection/CreateWorldScre
 accessible class net/minecraft/client/gui/screens/worldselection/CreateWorldScreen$SelectedGameMode
 accessible field net/minecraft/world/level/GameRules rules Ljava/util/Map;
 accessible method net/minecraft/client/gui/screens/worldselection/CreateWorldScreen createNewWorld ()V
-accessible method net/minecraft/client/gui/screens/worldselection/WorldGenSettingsComponent findPreset (Lnet/minecraft/client/gui/screens/worldselection/WorldCreationContext;Ljava/util/Optional;)Ljava/util/Optional;
+accessible method net/minecraft/world/level/GameRules$Value updateFromArgument (Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)V
+accessible method net/minecraft/client/gui/screens/worldselection/WorldGenSettingsComponent updateSettings (Lnet/minecraft/client/gui/screens/worldselection/WorldCreationContext$SimpleUpdater;)V
