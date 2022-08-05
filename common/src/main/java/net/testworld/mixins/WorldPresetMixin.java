@@ -20,14 +20,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Optional;
 
+import static net.testworld.TestWorld.VOID_WORLD;
+
 // if you can't mixin here, make sure your access widener is set up correctly!
 @Mixin(WorldPresets.Bootstrap.class)
 public abstract class WorldPresetMixin {
     @Shadow protected abstract Holder<WorldPreset> registerCustomOverworldPreset(ResourceKey<WorldPreset> key, LevelStem dimensionOptions);
     @Shadow protected abstract LevelStem makeOverworld(ChunkGenerator chunkGenerator);
-
-    // defining our registry key. this key provides an Identifier for our preset, that we can use for our lang files and data elements.
-    private static final ResourceKey<WorldPreset> VOID_WORLD = ResourceKey.create(Registry.WORLD_PRESET_REGISTRY, new ResourceLocation("testworld", "testworld"));
 
     @Inject(method = "run", at = @At("RETURN"))
     private void addPresets(CallbackInfoReturnable<RegistryAccess.RegistryEntry<WorldPreset>> cir) {

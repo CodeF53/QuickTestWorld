@@ -8,6 +8,7 @@ import net.minecraft.client.gui.screens.worldselection.WorldOpenFlows;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.GameRules.Key;
 import net.minecraft.world.level.levelgen.FlatLevelSource;
+import net.testworld.TestWorld;
 import net.testworld.TestWorldSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,17 +17,18 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import static net.testworld.TestWorld.isTestWorldSelected;
+
 @Mixin(CreateWorldScreen.class)
 public abstract class OnCreateWorldMixin {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger("modid");
     @Redirect(method = "onCreate", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/worldselection/WorldOpenFlows;confirmWorldCreation(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/screens/worldselection/CreateWorldScreen;Lcom/mojang/serialization/Lifecycle;Ljava/lang/Runnable;)V"))
     void changeSettings(Minecraft minecraft, CreateWorldScreen createWorldScreen, Lifecycle lifecycle, Runnable runnable) {
-        LOGGER.info("aaaa");
+        TestWorld.LOGGER.info("aaaa");
         if (createWorldScreen.worldGenSettingsComponent.settings().worldGenSettings().overworld() instanceof FlatLevelSource flatLevelSource) {
-            LOGGER.info("world flatworld");
-            if (flatLevelSource instanceof TestWorldSource) {
-                LOGGER.info("world testworld");
+            TestWorld.LOGGER.info("world flatworld");
+            if (isTestWorldSelected) {
+                TestWorld.LOGGER.info("world testworld");
                 // Internals
                 // - Hardcore Off
                 createWorldScreen.hardCore = false;
