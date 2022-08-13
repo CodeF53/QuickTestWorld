@@ -6,7 +6,6 @@ plugins {
 
 // These are the access wideners depending on the minecraft version
 def mcVersionToAccessWidenerVersion = [
-        "1.18.2": "1_19",
         "1.19":   "1_19"
 ]
 rootProject.ext.set("accessWideners", mcVersionToAccessWidenerVersion)
