@@ -17,9 +17,6 @@
   "entrypoints": {
     "client": [
       "net.testworld.fabric.TestWorldFabric"
-    ],
-    "preLaunch": [
-      "net.testworld.fabric.PreLaunchSetup"
     ]
   },
   "mixins": [
@@ -27,8 +24,6 @@
     "testworld-common.mixins.json"
   ],
   "depends": {
-    "fabric": "*",
-    "minecraft": "*",
-    "architectury": ">=5.7.28"
+    "minecraft": "*"
   }
 }
