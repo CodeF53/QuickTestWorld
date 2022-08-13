@@ -11,7 +11,7 @@ authors = "Me!"
 description = '''
 A minecraft mod that adds a new world type "testworld"
 '''
-#logoFile = ""
+logoFile = "icon.png"
 
 [[dependencies.${id}]]
 modId = "forge"
