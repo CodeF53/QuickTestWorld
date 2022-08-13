@@ -30,12 +30,6 @@ shadowJar {
 
     configurations = [project.configurations.shadowCommon, project.configurations.shade]
 
-    // TODO: Fix this when Architectury adds support for non mod jars (https://canary.discord.com/channels/792699517631594506/813076934740934665/1002712371728502794)
-//    if (minecraft_version == "1.16.5") {
-        // This is because 1.18.1- doesn't support JarJar
-        relocate "com.llamalad7.mixinextras", "${rootProject.mod_id}.libraries.com.llamalad7.mixinextras"
-//    }
-
     classifier "dev-shadow"
 }
 

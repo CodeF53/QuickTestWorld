@@ -6,7 +6,6 @@ plugins {
 
 // These are the access wideners depending on the minecraft version
 def mcVersionToAccessWidenerVersion = [
-        "1.16.5": "1_19",
         "1.18.2": "1_19",
         "1.19":   "1_19"
 ]
@@ -53,21 +52,8 @@ subprojects { p ->
     configurations {
         shade // I recommend using "addJar" instead of "shade"
         addJar
-
-        if (minecraft_version == "1.16.5") { // This is because 1.18.1- doesn't support JarJar
-            if (p == project(":forge")) {
-                shade.extendsFrom addJar
-            } else {
-                if (p != project(":common")) {
-                    include.extendsFrom addJar
-                } else {
-                    shade.extendsFrom addJar
-                }
-            }
-        } else {
-            if (p != project(":common")) {
-                include.extendsFrom addJar
-            }
+        if (p != project(":common")) {
+            include.extendsFrom addJar
         }
 
         implementation.extendsFrom shade
@@ -80,20 +66,6 @@ subprojects { p ->
 
         annotationProcessor "systems.manifold:manifold-preprocessor:${rootProject.manifold_version}"
 
-        // https://github.com/LlamaLad7/MixinExtras/wiki
-        if (p == project(":forge")) {
-            // TODO: Fix this when Architectury adds support for non mod jars (https://canary.discord.com/channels/792699517631594506/813076934740934665/1002712371728502794)
-//            addJar "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
-            shade "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
-        } else {
-            addJar "com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}"
-        }
-        annotationProcessor("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras}")
-        
-        
-        
-        
-        
         // Dev Env Optimizations
         //// https://www.cursemaven.com/
         //// https://docs.modrinth.com/docs/tutorials/maven/
