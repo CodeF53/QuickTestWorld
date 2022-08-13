@@ -21,8 +21,6 @@ dependencies {
     addJar "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
     runtimeOnly 'org.joml:joml:1.10.4' // Don't know why fabric api needs this
 
-    addJar "dev.architectury:architectury-fabric:${rootProject.architectury_version}"
-
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 }
