@@ -1,28 +1,40 @@
-build/
-*.ipr
-run/
-fabric/run/
-forge/run/
-*.iws
-out/
-*.iml
-.gradle/
-output/
-bin/
-libs/
-.architectury-transformer/
+# gradle
 
+.gradle/
+build/
+out/
+classes/
+
+# eclipse
+
+*.launch
+
+# idea
+
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# vscode
+
+.settings/
+.vscode/
+bin/
 .classpath
 .project
-.idea/
-classes/
-.metadata
-.vscode
-.settings
-*.launch
-hs_err_pid*
 
-build.properties
-Merged/
+# macos
 
-common/src/main/resources/*.accesswidener
+*.DS_Store
+
+# fabric
+
+run/
+
+# java
+
+hs_err_*.log
+replay_*.log
+*.hprof
+*.jfr
