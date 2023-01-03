@@ -3,13 +3,6 @@ package net.testworld.mixins;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.context.ParsedArgument;
 import com.mojang.serialization.Lifecycle;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
-import net.minecraft.client.gui.screens.worldselection.WorldOpenFlows;
-import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.world.level.GameRules;
-import net.minecraft.world.level.GameRules.Key;
-import net.minecraft.world.level.levelgen.WorldGenSettings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -18,6 +11,12 @@ import static net.testworld.TestWorld.isTestWorldSelected;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
+import net.minecraft.client.gui.screens.worldselection.WorldOpenFlows;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.GameRules.Key;
 
 @Mixin(CreateWorldScreen.class)
 public abstract class OnCreateWorldMixin {
@@ -31,9 +30,6 @@ public abstract class OnCreateWorldMixin {
       createWorldScreen.gameMode = CreateWorldScreen.SelectedGameMode.CREATIVE;
       // - Cheats On
       createWorldScreen.commands = true;
-      // - Structures Off
-      if (createWorldScreen.worldGenSettingsComponent.settings().worldGenSettings().generateStructures())
-        createWorldScreen.worldGenSettingsComponent.updateSettings(WorldGenSettings::withStructuresToggled);
 
       // Game Rules
       GameRules gameRules = createWorldScreen.gameRules;
@@ -48,7 +44,7 @@ public abstract class OnCreateWorldMixin {
       // - phantom spawning off
       setGameRuleBool(gameRules, new Key<GameRules.BooleanValue>("doInsomnia", GameRules.Category.SPAWNING), false);
     }
-    WorldOpenFlows.confirmWorldCreation(Minecraft.getInstance(), createWorldScreen, createWorldScreen.worldGenSettingsComponent.settings().worldSettingsStability(), createWorldScreen::createNewWorld);
+    WorldOpenFlows.confirmWorldCreation(Minecraft.getInstance(), createWorldScreen, lifecycle, runnable);
   }
 
   private static <T extends GameRules.Value<T>> void setGameRuleBool(GameRules gameRules, GameRules.Key<T> key, Boolean val) {
