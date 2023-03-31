@@ -6,8 +6,9 @@
   "client": [
     "OnCreateWorldMixin",
     "PlayerPlatformMaker",
-    "WorldGenSettingsComponentMixin",
-    "WorldPresetMixin"
+    "WorldCreationUiStateMixin",
+    "WorldPresetMixin",
+    "WorldPresetTagsProviderMixin"
   ],
   "injectors": {
     "defaultRequire": 1

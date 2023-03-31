@@ -1,20 +1,14 @@
 package net.testworld.mixins;
 
-import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biomes;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.FlatLevelSource;
-import net.minecraft.world.level.levelgen.flat.FlatLayerInfo;
 import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.presets.WorldPreset;
@@ -26,13 +20,13 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.List;
 import java.util.Optional;
 
-import static net.minecraft.world.level.biome.Biomes.THE_VOID;
 import static net.testworld.TestWorld.VOID_WORLD;
+import static net.testworld.TestWorld.VOID_WORLD_REF;
 
 @Mixin(WorldPresets.Bootstrap.class)
 public abstract class WorldPresetMixin {
@@ -46,7 +40,11 @@ public abstract class WorldPresetMixin {
 
   @Shadow @Final private HolderGetter<StructureSet> structureSets;
 
-  @Inject(method = "run", at = @At("RETURN"))
+  @Shadow @Final private BootstapContext<WorldPreset> context;
+
+  @Shadow protected abstract WorldPreset createPresetWithCustomOverworld(LevelStem levelStem);
+
+  @Inject(method = "registerOverworlds", at = @At("RETURN"))
   private void addPresets(CallbackInfo ci) {
     this.registerCustomOverworldPreset(VOID_WORLD, this.makeOverworld(
       new FlatLevelSource(new FlatLevelGeneratorSettings(
@@ -55,4 +53,13 @@ public abstract class WorldPresetMixin {
         FlatLevelGeneratorSettings.createLakesList(this.placedFeatures))
       )));
   }
+
+  @Inject(method = "registerCustomOverworldPreset", at = @At("HEAD"), cancellable = true)
+  private void addPreset(ResourceKey<WorldPreset> resourceKey, LevelStem levelStem, CallbackInfo ci) {
+    if (resourceKey == VOID_WORLD) {
+      VOID_WORLD_REF = this.context.register(resourceKey, this.createPresetWithCustomOverworld(levelStem));
+      ci.cancel();
+    }
+  }
+
 }
